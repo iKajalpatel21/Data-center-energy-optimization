@@ -1,0 +1,34 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements-producer.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements-producer.txt
+
+# Copy source code
+COPY src/ ./src/
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PRODUCER_INTERVAL=60
+ENV PRODUCER_BACKEND=kafka
+ENV PRODUCER_SERVERS=kafka:9092
+ENV PRODUCER_TOPIC=data-center-metrics
+
+# Run the producer
+CMD ["python", "-m", "src.data_generation.streaming_producer", \
+     "--interval", "${PRODUCER_INTERVAL}", \
+     "--backend", "${PRODUCER_BACKEND}", \
+     "--kafka-servers", "${PRODUCER_SERVERS}", \
+     "--kafka-topic", "${PRODUCER_TOPIC}", \
+     "--num-servers", "100", \
+     "--num-racks", "10", \
+     "--num-chillers", "4"]
