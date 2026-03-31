@@ -1,12 +1,12 @@
-# Data Center Energy Optimization 🌍⚡
+# Data Center Energy Optimization
 
 A production-grade machine learning system for predicting and optimizing data center energy efficiency using AI-driven insights for cooling optimization, workload scheduling, and carbon-aware operations.
 
-**Status**: Phase 2 Complete ✅ | [Live on GitHub](https://github.com/iKajalpatel21/Data-center-energy-optimization)
+**Status**: Phase 2 Complete | [Live on GitHub](https://github.com/iKajalpatel21/Data-center-energy-optimization)
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Key Features](#key-features)
@@ -20,14 +20,14 @@ A production-grade machine learning system for predicting and optimizing data ce
 
 ---
 
-## 🎯 Overview
+## Overview
 
 Data centers consume **1-2% of global electricity**. This project builds machine learning models to predict **PUE (Power Usage Effectiveness)** and forecast workload spikes, enabling:
 
-✅ **Lower Energy Costs** - Reduce cooling overhead by 15-20%  
-✅ **Carbon Reduction** - Route workloads to renewable-powered hours  
-✅ **Predictive Maintenance** - Anticipate cooling system bottlenecks  
-✅ **Real-Time Optimization** - AI-driven chiller and workload scheduling  
+[*] **Lower Energy Costs** - Reduce cooling overhead by 15-20%  
+[*] **Carbon Reduction** - Route workloads to renewable-powered hours  
+[*] **Predictive Maintenance** - Anticipate cooling system bottlenecks  
+[*] **Real-Time Optimization** - AI-driven chiller and workload scheduling  
 
 ### What is PUE?
 ```
@@ -42,72 +42,69 @@ Lower is Better:
 
 ---
 
-## ⭐ Key Features
+## Key Features
 
 | Feature | Description |
 |---------|-------------|
-| 🌲 **Random Forest PUE Predictor** | 100-tree ensemble predicting efficiency from 40+ features |
-| 📈 **LSTM Workload Forecaster** | 12-hour lookback, 6-hour ahead forecast of CPU spikes |
-| 🔧 **Feature Engineering Pipeline** | Automated extraction of temporal, workload, cooling, weather features |
-| 🎲 **Synthetic Data Generator** | Realistic data center metrics with temporal patterns |
-| ✅ **Schema Validation** | JSON schema enforcement for data quality |
-| 🐳 **Docker Ready** | Kafka + Zookeeper setup for streaming |
-| 📊 **Interactive Notebooks** | Jupyter notebooks for exploration and visualization |
+| Random Forest PUE Predictor | 100-tree ensemble predicting efficiency from 40+ features |
+| LSTM Workload Forecaster | 12-hour lookback, 6-hour ahead forecast of CPU spikes |
+| Feature Engineering Pipeline | Automated extraction of temporal, workload, cooling, weather features |
+| Synthetic Data Generator | Realistic data center metrics with temporal patterns |
+| Schema Validation | JSON schema enforcement for data quality |
+| Docker Ready | Kafka + Zookeeper setup for streaming |
+| Interactive Notebooks | Jupyter notebooks for exploration and visualization |
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│         REAL-TIME MONITORING & PREDICTIONS                  │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  Data Center Metrics                                          │
-│  ├─ Server: CPU, Memory, Disk, Network, Temps               │
-│  ├─ Cooling: Chiller power, efficiency, temps               │
-│  └─ Weather: Outdoor temp, humidity, solar irradiance       │
-│        ↓                                                      │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │ FEATURE ENGINEERING (40+ Features)                  │    │
-│  │ ├─ PUE Calculation                                   │    │
-│  │ ├─ Workload aggregation                              │    │
-│  │ ├─ Temporal features (hour, day, season)             │    │
-│  │ └─ Weather correlation                               │    │
-│  └─────────────────────────────────────────────────────┘    │
-│        ↓                                                      │
-│  ┌────────────────────┐      ┌──────────────────────┐       │
-│  │ RANDOM FOREST      │      │ LSTM NETWORK         │       │
-│  │ (PUE Predictor)    │      │ (Workload Forecaster)│       │
-│  │ 100 Trees          │      │ 12→6 hours forecast  │       │
-│  │ Output: PUE (1-3)  │      │ Output: CPU% ahead   │       │
-│  └────────────────────┘      └──────────────────────┘       │
-│        ↓                              ↓                       │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │ OPTIMIZATION ENGINE (Phase 3)                        │    │
-│  │ ├─ Carbon-aware scheduler                            │    │
-│  │ ├─ Cooling optimization                              │    │
-│  │ └─ Multi-zone workload distribution                  │    │
-│  └─────────────────────────────────────────────────────┘    │
-│        ↓                                                      │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │ ACTIONS: Adjust chillers, reschedule workloads       │    │
-│  └─────────────────────────────────────────────────────┘    │
-│                                                               │
-└─────────────────────────────────────────────────────────────┘
+REAL-TIME MONITORING & PREDICTIONS
+===================================
+
+Data Center Metrics
+  - Server: CPU, Memory, Disk, Network, Temps
+  - Cooling: Chiller power, efficiency, temps
+  - Weather: Outdoor temp, humidity, solar irradiance
+        |
+        v
+FEATURE ENGINEERING (40+ Features)
+  - PUE Calculation
+  - Workload aggregation
+  - Temporal features (hour, day, season)
+  - Weather correlation
+        |
+        +-------------------+
+        |                   |
+        v                   v
+RANDOM FOREST          LSTM NETWORK
+(PUE Predictor)        (Workload Forecaster)
+100 Trees              12-to-6 hours forecast
+Output: PUE (1-3)      Output: CPU% ahead
+        |                   |
+        +-------------------+
+        |
+        v
+OPTIMIZATION ENGINE (Phase 3)
+  - Carbon-aware scheduler
+  - Cooling optimization
+  - Multi-zone workload distribution
+        |
+        v
+ACTIONS: Adjust chillers, reschedule workloads
 ```
 
 ---
 
-## 📅 Project Phases
+## Project Phases
 
-### ✅ Phase 1: Data Foundation (Complete)
+### [DONE] Phase 1: Data Foundation (Complete)
 **Goal**: Build realistic streaming data pipeline
 
-- ✅ Synthetic data generator (100+ servers, realistic workload patterns)
-- ✅ JSON schema validation for all metric types
-- ✅ Kafka/Kinesis streaming setup
-- ✅ Multi-backend support (local files, Kafka, stdout)
+- [*] Synthetic data generator (100+ servers, realistic workload patterns)
+- [*] JSON schema validation for all metric types
+- [*] Kafka/Kinesis streaming setup
+- [*] Multi-backend support (local files, Kafka, stdout)
 
 **Files**:
 - `src/data_generation/synthetic_generator.py` - Stateful data generation
@@ -115,14 +112,14 @@ Lower is Better:
 - `src/schemas/data_schemas.py` - JSON schemas
 - `src/schemas/validator.py` - Validation logic
 
-### ✅ Phase 2: ML Models & Feature Engineering (Complete)
+### [DONE] Phase 2: ML Models & Feature Engineering (Complete)
 **Goal**: Build predictive models
 
-- ✅ Feature engineering (40+ features: workload, cooling, temporal, weather)
-- ✅ Random Forest PUE predictor (100 trees, feature importance)
-- ✅ LSTM workload forecaster (spike detection, confidence intervals)
-- ✅ End-to-end training pipeline
-- ✅ Interactive Jupyter notebooks
+- [*] Feature engineering (40+ features: workload, cooling, temporal, weather)
+- [*] Random Forest PUE predictor (100 trees, feature importance)
+- [*] LSTM workload forecaster (spike detection, confidence intervals)
+- [*] End-to-end training pipeline
+- [*] Interactive Jupyter notebooks
 
 **Files**:
 - `src/features/feature_engineer.py` - Feature extraction
@@ -132,10 +129,10 @@ Lower is Better:
 - `notebooks/01_PUE_Predictor_RandomForest.ipynb` - Model demo
 
 **Performance**:
-- PUE Predictor: High R² on test set, MAE < 0.1
+- PUE Predictor: High R2 on test set, MAE < 0.1
 - Workload Forecaster: 6-hour ahead CPU forecasts with uncertainty bounds
 
-### 🔜 Phase 3: Sustainability & Optimization (In Development)
+### [TODO] Phase 3: Sustainability & Optimization (In Development)
 **Goal**: Use predictions to optimize energy usage
 
 - Carbon-aware scheduler (route workloads to low-carbon hours)
@@ -143,7 +140,7 @@ Lower is Better:
 - Renewable energy awareness (track grid carbon intensity)
 - Multi-zone workload distribution
 
-### 🔜 Phase 4: Scale & Deploy (Planned)
+### [TODO] Phase 4: Scale & Deploy (Planned)
 **Goal**: Production deployment
 
 - Prometheus + Grafana monitoring
@@ -153,7 +150,7 @@ Lower is Better:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone Repository
 ```bash
@@ -205,7 +202,7 @@ jupyter notebook notebooks/01_PUE_Predictor_RandomForest.ipynb
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Requirements
 - Python 3.8+
@@ -252,7 +249,7 @@ This starts:
 
 ---
 
-## 💻 Usage
+## Usage
 
 ### Generate Synthetic Data
 ```python
@@ -275,7 +272,7 @@ from src.ml.train_models import ModelTrainingPipeline
 pipeline = ModelTrainingPipeline()
 results = pipeline.run_pipeline(num_batches=168)
 
-print(f"PUE Model R²: {results['pue_model']['metrics']['r2']:.4f}")
+print(f"PUE Model R2: {results['pue_model']['metrics']['r2']:.4f}")
 print(f"Top features: {results['pue_model']['feature_importance']}")
 ```
 
@@ -306,7 +303,7 @@ forecaster.load("models/checkpoints/workload_model.h5",
                 "models/checkpoints/workload_scaler.npy")
 
 # Get 6-hour forecast with confidence bounds
-recent_data = np.array([...])  # 12 hours × N features
+recent_data = np.array([...])  # 12 hours x N features
 mean_forecast, std_forecast, samples = forecaster.forecast_with_confidence(recent_data)
 
 spike_info = forecaster.detect_spike(mean_forecast)
@@ -316,7 +313,7 @@ print(f"Max forecast: {spike_info['max_forecast']:.1f}%")
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Data-center-energy-optimization/
@@ -371,49 +368,53 @@ Data-center-energy-optimization/
 
 ---
 
-## 🔍 Key Concepts
+## Key Concepts
 
 ### Feature Engineering
 The system extracts 40+ features from raw metrics:
 
 | Category | Examples |
 |----------|----------|
-| **Workload** | avg_cpu, max_cpu, memory, network throughput |
-| **Cooling** | chiller_power, chiller_efficiency, temp_deltas |
-| **Temporal** | hour, day_of_week, is_business_hours, season |
-| **Weather** | outdoor_temp, humidity, wind_speed, solar_irradiance |
-| **PUE** | total_power, it_power, facility_power, pue_ratio |
+| Workload | avg_cpu, max_cpu, memory, network throughput |
+| Cooling | chiller_power, chiller_efficiency, temp_deltas |
+| Temporal | hour, day_of_week, is_business_hours, season |
+| Weather | outdoor_temp, humidity, wind_speed, solar_irradiance |
+| PUE | total_power, it_power, facility_power, pue_ratio |
 
 ### Random Forest Advantages
 ```
 Why not Linear Regression?
-❌ Assumes linear relationship: CPU ↔ PUE
-❌ Breaks with non-linear patterns (thresholds, interactions)
+  - Assumes linear relationship: CPU <-> PUE
+  - Breaks with non-linear patterns (thresholds, interactions)
 
-Why Random Forest? ✅
-✅ Captures non-linear patterns
-✅ Handles 40+ features without heavy tuning
-✅ Built-in feature importance
-✅ Robust to outliers
-✅ Fast inference (milliseconds)
+Why Random Forest?
+  - Captures non-linear patterns
+  - Handles 40+ features without heavy tuning
+  - Built-in feature importance
+  - Robust to outliers
+  - Fast inference (milliseconds)
 ```
 
 ### LSTM Architecture
 ```
-Input: [12 past hours] × [40 features each]
-       ↓
+Input: [12 past hours] x [40 features each]
+       |
+       v
 LSTM Layer 1: 64 units (learns long-term patterns)
-       ↓
+       |
+       v
 LSTM Layer 2: 32 units (extracts key features)
-       ↓
+       |
+       v
 Dense Layer: 12 neurons (forecast horizon)
-       ↓
+       |
+       v
 Output: [6 hours ahead] CPU utilization forecast
 ```
 
 ---
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 ### Training Results (Phase 2)
 ```
@@ -421,29 +422,29 @@ Data: 168 hourly samples (1 week)
 Split: 70% train, 15% validation, 15% test
 
 PUE Predictor (Random Forest):
-  • Test R²:  0.87 (explains 87% of variance)
-  • Test MAE: 0.08 (avg error ±0.08 PUE points)
-  • Top 5 Features: CPU, chiller_cop, outdoor_temp, ...
+  Test R2:  0.87 (explains 87% of variance)
+  Test MAE: 0.08 (avg error +/-0.08 PUE points)
+  Top 5 Features: CPU, chiller_cop, outdoor_temp, ...
 
 Workload Forecaster (LSTM):
-  • Validation Loss: 0.015
-  • Validation MAE: 3.2% (CPU forecast error)
-  • Spike Detection: Precision 92%, Recall 88%
+  Validation Loss: 0.015
+  Validation MAE: 3.2% (CPU forecast error)
+  Spike Detection: Precision 92%, Recall 88%
 ```
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is an actively developed research project. Contributions welcome!
 
 ### Areas for Contribution:
-- **Phase 3 Implementation** - Optimization engine
-- **Data Ingestion** - Connect real data center APIs
-- **Monitoring** - Prometheus exporter, Grafana dashboards
-- **Testing** - Unit tests, integration tests
-- **Documentation** - Examples, tutorials
-- **Performance** - Model optimization, inference speedup
+- Phase 3 Implementation - Optimization engine
+- Data Ingestion - Connect real data center APIs
+- Monitoring - Prometheus exporter, Grafana dashboards
+- Testing - Unit tests, integration tests
+- Documentation - Examples, tutorials
+- Performance - Model optimization, inference speedup
 
 ### Development Workflow:
 ```bash
@@ -460,7 +461,7 @@ git push origin feature/your-feature
 
 ---
 
-## 🔜 Next Steps (Phase 3)
+## Next Steps (Phase 3)
 
 ### Immediate (2 weeks)
 1. Implement carbon-aware scheduler
@@ -479,7 +480,7 @@ git push origin feature/your-feature
 
 ---
 
-## 📝 Citation
+## Citation
 
 If you use this project in research:
 
@@ -494,21 +495,21 @@ If you use this project in research:
 
 ---
 
-## 📧 Contact & Support
+## Contact & Support
 
-- **GitHub Issues**: [Report bugs](https://github.com/iKajalpatel21/Data-center-energy-optimization/issues)
-- **Email**: kajalpatel@example.com
-- **Status**: Active development
+- GitHub Issues: [Report bugs](https://github.com/iKajalpatel21/Data-center-energy-optimization/issues)
+- Email: kajalpatel@example.com
+- Status: Active development
 
 ---
 
-## 📄 License
+## License
 
 MIT License - See LICENSE file for details
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with sklearn, TensorFlow, Pandas
 - Inspired by real data center efficiency research
@@ -517,6 +518,6 @@ MIT License - See LICENSE file for details
 ---
 
 **Last Updated**: March 30, 2026  
-**Current Phase**: 2 ✅ | **Next Phase**: 3 🔜
+**Current Phase**: 2 | **Next Phase**: 3
 
-⭐ If you find this project useful, please star it on GitHub!
+If you find this project useful, please star it on GitHub!
