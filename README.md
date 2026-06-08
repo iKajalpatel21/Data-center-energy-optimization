@@ -2,7 +2,7 @@
 
 A production-grade machine learning system for predicting and optimizing data center energy efficiency using AI-driven insights for cooling optimization, workload scheduling, and carbon-aware operations.
 
-**Status**: Phase 3 Complete | [Live on GitHub](https://github.com/iKajalpatel21/Data-center-energy-optimization)
+**Status**: Phase 4 In Progress | [Live on GitHub](https://github.com/iKajalpatel21/Data-center-energy-optimization)
 
 ---
 
@@ -159,13 +159,15 @@ ACTIONS: Adjust chillers, reschedule workloads, optimize zones
 - 3-8% PUE improvement
 - Safe operation within ASHRAE specifications
 
-### [TODO] Phase 4: Scale & Deploy (Planned)
+### [IN PROGRESS] Phase 4: Scale & Deploy
 **Goal**: Production deployment
 
-- Prometheus + Grafana monitoring
-- GitHub Actions CI/CD pipeline
-- AWS infrastructure as code
-- Horizontal scaling for multi-datacenter
+- [*] FastAPI REST API wrapping the orchestrator (`src/api/`)
+- [*] GitHub Actions CI/CD pipeline (lint, test, Docker build)
+- [*] Docker image for the API service (`docker/Dockerfile.api`)
+- [ ] Prometheus metrics exporter
+- [ ] Grafana dashboard
+- [ ] AWS infrastructure as code
 
 ---
 
@@ -231,6 +233,29 @@ This demonstrates the complete optimization pipeline:
 - Shows 24-hour optimization impact
 
 See [PHASE3_README.md](PHASE3_README.md) for complete documentation.
+
+### 7. Start the REST API (Phase 4)
+```bash
+uvicorn src.api.main:app --reload --port 8000
+```
+
+API endpoints:
+```
+GET  /health        # Liveness check
+GET  /status        # Optimization statistics
+GET  /carbon        # Current grid carbon status
+POST /carbon        # Record new carbon reading
+GET  /workloads     # List queued workloads
+POST /workloads     # Add workload to scheduler
+POST /optimize      # Run optimization cycle
+```
+
+Interactive docs: http://localhost:8000/docs
+
+### 8. Run Tests
+```bash
+pytest tests/ -v --cov=src
+```
 
 ---
 
@@ -351,8 +376,13 @@ print(f"Max forecast: {spike_info['max_forecast']:.1f}%")
 Data-center-energy-optimization/
 │
 ├── README.md                          # This file
-├── PHASE2_README.md                   # Phase 2 detailed documentation
+├── PHASE2_README.md                   # Phase 2 documentation
+├── PHASE3_README.md                   # Phase 3 documentation
 ├── requirements-producer.txt          # Python dependencies
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml                     # CI: lint, test, Docker build
 │
 ├── config/
 │   └── project.ini                    # Configuration & metadata
@@ -368,25 +398,34 @@ Data-center-energy-optimization/
 │   │   └── validator.py               # Schema validation
 │   │
 │   ├── features/
-│   │   ├── __init__.py
 │   │   └── feature_engineer.py        # Feature extraction (40+ features)
 │   │
 │   ├── models/
-│   │   ├── __init__.py
 │   │   ├── pue_predictor.py           # Random Forest PUE model
 │   │   └── workload_forecaster.py     # LSTM forecaster
 │   │
-│   └── ml/
-│       ├── __init__.py
-│       └── train_models.py            # Training pipeline
+│   ├── ml/
+│   │   └── train_models.py            # Training pipeline
+│   │
+│   ├── scheduling/
+│   │   └── carbon_scheduler.py        # Carbon-aware workload scheduler
+│   │
+│   ├── optimization/
+│   │   ├── cooling_optimizer.py       # Cooling setpoint & chiller staging
+│   │   └── orchestrator.py            # Central optimization engine
+│   │
+│   └── api/
+│       ├── main.py                    # FastAPI application (Phase 4)
+│       └── models.py                  # Pydantic request/response schemas
 │
 ├── notebooks/
-│   └── 01_PUE_Predictor_RandomForest.ipynb   # Interactive demo
+│   ├── 01_PUE_Predictor_RandomForest.ipynb   # Phase 2 ML demo
+│   └── 02_Phase3_Optimization_Demo.ipynb     # Phase 3 orchestrator demo
 │
 ├── docker/
 │   ├── docker-compose.yml             # Kafka + Zookeeper setup
-│   ├── Dockerfile.producer            # Producer container
-│   └── Dockerfile.consumer            # Consumer container (future)
+│   ├── Dockerfile.producer            # Streaming producer container
+│   └── Dockerfile.api                 # REST API container (Phase 4)
 │
 ├── models/
 │   └── checkpoints/                   # Trained model artifacts
@@ -395,7 +434,10 @@ Data-center-energy-optimization/
 │       ├── workload_model.h5
 │       └── workload_scaler.npy
 │
-└── tests/                             # Unit tests (coming soon)
+└── tests/
+    ├── test_carbon_scheduler.py       # Carbon scheduler unit tests
+    ├── test_cooling_optimizer.py      # Cooling optimizer unit tests
+    └── test_api.py                    # API integration tests
 ```
 
 ---
@@ -471,10 +513,9 @@ Workload Forecaster (LSTM):
 This is an actively developed research project. Contributions welcome!
 
 ### Areas for Contribution:
-- Phase 3 Implementation - Optimization engine
 - Data Ingestion - Connect real data center APIs
 - Monitoring - Prometheus exporter, Grafana dashboards
-- Testing - Unit tests, integration tests
+- Testing - Expand unit/integration test coverage
 - Documentation - Examples, tutorials
 - Performance - Model optimization, inference speedup
 
@@ -556,7 +597,7 @@ MIT License - See LICENSE file for details
 
 ---
 
-**Last Updated**: March 30, 2026  
-**Current Phase**: 2 | **Next Phase**: 3
+**Last Updated**: June 8, 2026  
+**Current Phase**: 4 | **Status**: In Progress
 
 If you find this project useful, please star it on GitHub!
